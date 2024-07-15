@@ -1,3 +1,16 @@
+const popupButton = document.querySelector('#add-book');
+const closeButton = document.querySelector('.close-btn');
+
+popupButton.addEventListener('click', () => {
+    document.querySelector('.popup').classList.add('active');
+});
+
+closeButton.addEventListener('click', () => {
+    document.querySelector('.popup').classList.remove('active');
+});
+
+
+
 const myLibrary = [];
 
 function Book(title, author, pages) {
@@ -26,5 +39,5 @@ function displayBooks() {
     }
 }
 
-addBook();
-displayBooks();
+// addBook();
+// displayBooks();
