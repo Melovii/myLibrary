@@ -1,20 +1,13 @@
     body {
         background-color: var(--bg-color);
-        /*display: flex;*/
-        /*flex-direction: column;*/
-        /*align-items: center;*/
-        /*justify-content: center;*/
-        /*width: 100vw;*/
-        /*height: 100vh;*/
-        /*min-width: 360px;*/
     }
 
     :root {
-        --white: #d3d3d3;
-        /*--bg-color: #191B1CFF;*/
+        --white: #cbcbcb;
+        --bg-color: #191B1CFF;
         --cool-red: B31E29FF;
         --black: #191B1CFF;
-        --bg-color: #eeeeee;
+        /*--bg-color: #eeeeee;*/
         --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
 
@@ -28,9 +21,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
-        /*height: 100vh;*/
-        /*width: 100vw;*/
-        color: var(--black);
+        color: var(--white);
     }
 
     .no-scroll {
@@ -42,7 +33,7 @@
     }
 
     button:hover, .close-btn:hover {
-        background-color: black;
+        background-color: var(--bg-color);
         color: white;
     }
 
@@ -61,6 +52,7 @@
         padding: 20px;
         background-color: white;
         box-shadow: var(--shadow);
+        color: var(--black);
     }
 
     header > div > button {
@@ -70,11 +62,13 @@
         font-size: 16px;
         border-width: 0;
         cursor: pointer;
+        background-color: #eaeaea;
         transition: 100ms ease-in-out;
     }
 
     header > div > button:hover {
         transform: scale(110%);
+        background-color: var(--bg-color);
     }
 
     .left-side {
@@ -109,6 +103,7 @@
         align-items: center;
         justify-content: space-evenly;
         background-color: white;
+        color: var(--bg-color);
         font-weight: 600;
         font-size: 24px;
         padding: 10px;
@@ -149,6 +144,10 @@
         background-color: rgb(204, 0, 0);
     }
 
+    .remove:hover {
+        background-color: var(--bg-color);
+    }
+
     /* ADD BOOK POPUP */
 
     .center {
@@ -171,7 +170,7 @@
         font-weight: 600;
         font-size: 16px;
         background: var(--white);
-        color: var(--black);
+        color: var(--bg-color);
         border: none;
         outline: none;
         cursor: pointer;
@@ -181,6 +180,7 @@
     .popup {
         text-align: start;
         background: white;
+        color: var(--bg-color);
         position: absolute;
         top: 50%;
         left: 50%;
@@ -219,7 +219,7 @@
 
     form h2 {
         text-align: center;
-        color: black;
+        color: var(--bg-color);
         margin: 10px 0 20px;
         font-size: 24px;
     }
@@ -230,7 +230,7 @@
 
     .popup.form > .form-element {
         font-size: 14px;
-        color: black;
+        color: var(--bg-color);
     }
 
     .form-element > input[type="text"],
@@ -255,12 +255,12 @@
         border: none;
         outline: none;
         background-color: var(--white);
-        color: black;
+        color: var(--bg-color);
         border-radius: 10px;
     }
 
     .form-element > button:hover {
-        background-color: var(--black);
+        background-color: var(--bg-color);
         color: white;
     }
 
@@ -282,7 +282,7 @@
     .github {
         height: 32px;
         width: auto;
-        color: var(--black);
+        color: var(--bg-color);
         transition: transform 0.69s linear(0 0%, 0 2.27%, 0.02 4.53%, 0.04 6.8%, 0.06 9.07%, 0.1 11.33%, 0.14 13.6%, 0.25 18.15%, 0.39 22.7%, 0.56 27.25%, 0.77 31.8%, 1 36.35%, 0.89 40.9%, 0.85 43.18%, 0.81 45.45%, 0.79 47.72%, 0.77 50%, 0.75 52.27%, 0.75 54.55%, 0.75 56.82%, 0.77 59.1%, 0.79 61.38%, 0.81 63.65%, 0.85 65.93%, 0.89 68.2%, 1 72.7%, 0.97 74.98%, 0.95 77.25%, 0.94 79.53%, 0.94 81.8%, 0.94 84.08%, 0.95 86.35%, 0.97 88.63%, 1 90.9%, 0.99 93.18%, 0.98 95.45%, 0.99 97.73%, 1 100%);
 
     }
