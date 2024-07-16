@@ -21,13 +21,8 @@ submitBook.addEventListener('click', (event) => {
     isRead = document.getElementById('read-check');
     event.preventDefault();
 
-    if (title.trim() === '' || author.trim() === '' || pages.trim() === '') {
-        alert('Please fill in all fields.');
-        return;
-    }
-
-    if (pages.trim() <= 0) {
-        alert('Please enter a valid number of pages.');
+    if (!title || !author || !pages || pages <= 0) {
+        alert('Please fill in all fields with valid data.');
         return;
     }
 
@@ -56,44 +51,50 @@ function addBook(title, author, pages, isRead) {
     myLibrary.push(newBook);
 }
 
-function addCard(title, author, pages, isRead, book) {
+function addCard(title, author, pages, isRead, newBook) {
     const main = document.querySelector('main');
     const cardDIV = document.createElement('div');
     cardDIV.classList.add('card');
     const titlePara = document.createElement('p');
     titlePara.classList.add('title');
-    titlePara.textContent = title;
+    titlePara.textContent = `\"${title}\"`;
     const authorPara = document.createElement('p');
     authorPara.classList.add('author');
     authorPara.textContent = author;
     const pagesPara = document.createElement('p');
     pagesPara.classList.add('pages');
-    pagesPara.textContent = pages;
+    pagesPara.textContent = `${pages} pages`;
     const isReadButton = document.createElement('button');
+
     if (isRead.checked) {
         isReadButton.classList.add('read');
         isReadButton.textContent = 'Read';
-        book.isRead = true;
     } else {
         isReadButton.classList.add('not-read');
         isReadButton.textContent = 'Not Read';
-        book.isRead = false;
     }
+
     isReadButton.addEventListener('click', () => {
-        // updateReadStatus(isReadButton);
-        book.toggleReadStatus();
-        if (book.isRead) {
-            updateReadStatus(isReadButton, book);
+        newBook.toggleReadStatus();
+        if (newBook.isRead) {
+            updateReadStatus(isReadButton, newBook);
+        } else {
+            updateReadStatus(isReadButton, newBook);
         }
     })
+
     const removeButton = document.createElement('button');
     removeButton.classList.add('remove');
     removeButton.textContent = 'Remove';
+    removeButton.addEventListener('click', () => {
+        const index = myLibrary.indexOf(newBook);
+        if (index !== -1) {
+            myLibrary.splice(index, 1);
+        }
+        cardDIV.remove();
+    });
 
     emptyInput();
-
-    // CHECK REMOVE BUTTON LATER AHA
-
     cardDIV.append(titlePara, authorPara, pagesPara, isReadButton, removeButton);
     main.appendChild(cardDIV);
 }
@@ -105,7 +106,6 @@ function emptyInput() {
     document.getElementById('read-check').checked = false;
 }
 
-
 function updateReadStatus(button, book) {
     if (button.textContent === 'Read') {
         button.textContent = 'Not Read';
@@ -116,7 +116,6 @@ function updateReadStatus(button, book) {
         button.textContent = 'Read';
         button.classList.toggle('read');
         button.classList.toggle('not-read');
-        book.isRead = false;
+        book.isRead = true;
     }
 }
-// TODO: FUNCTION TO REMOVE CARD FROM DOM

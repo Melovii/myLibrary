@@ -26,120 +26,60 @@
         <div class="center">
             <div class="popup">
                 <div class="close-btn">&times;</div>
-                <div class="form">
+                <form method="POST"> <!-- uhh use action=""  ???? -->
                     <h2>Add a new book</h2>
                     <div class="form-element">
                         <label for="title">Title</label>
-                        <input type="text" id="title" placeholder="Enter book title">
+                        <input type="text" id="title" placeholder="Enter book title" maxlength="50" required>
                     </div>
                     <div class="form-element">
                         <label for="author">Author</label>
-                        <input type="text" id="author" placeholder="Enter book author">
+                        <input type="text" id="author" placeholder="Enter book author" maxlength="50" required>
                     </div>
                     <div class="form-element">
                         <label for="pages">Pages</label>
-                        <input type="number" id="pages" placeholder="Enter number of pages">
+                        <input type="number" id="pages" placeholder="Enter number of pages" max="9999" required>
                     </div>
                     <div class="form-element">
                         <input type="checkbox" id="read-check">
                         <label for="read-check">Finished reading</label>
-                        <button class="form-element">Add Book</button>
+                        <button type="submit" class="form-element">Add Book</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
-        <div class="card">
-            <p class="title">Carnage vs Venom</p>
-            <p class="author">Peter Milligan</p>
-            <p class="pages">96</p>
-            <button class="read">Not Read</button>
-            <button class="remove">Remove</button>
-        </div>
+
+<!--        <div class="card">-->
+<!--            <p class="title">Carnage vs Venom</p>-->
+<!--            <p class="author">Peter Milligan</p>-->
+<!--            <p class="pages">96</p>-->
+<!--            <button class="not-read">Not Read</button>-->
+<!--            <button class="remove">Remove</button>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--            <p class="title">The C Programming Language</p>-->
+<!--            <p class="author">Brian Kernighan and Dennis Ritchie</p>-->
+<!--            <p class="pages">295</p>-->
+<!--            <button class="read">Read</button>-->
+<!--            <button class="remove">Remove</button>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--            <p class="title">Carnage vs Venom</p>-->
+<!--            <p class="author">Peter Milligan</p>-->
+<!--            <p class="pages">96</p>-->
+<!--            <button class="not-read">Not Read</button>-->
+<!--            <button class="remove">Remove</button>-->
+<!--        </div>-->
+<!--        <div class="card">-->
+<!--            <p class="title">The C Programming Language</p>-->
+<!--            <p class="author">Brian Kernighan and Dennis Ritchie</p>-->
+<!--            <p class="pages">295</p>-->
+<!--            <button class="read">Read</button>-->
+<!--            <button class="remove">Remove</button>-->
+<!--        </div>-->
+
+
     </main>
     <footer>
         <p>Copyright © 2024 melovii</p>
