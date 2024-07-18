@@ -1,8 +1,8 @@
-# myLibrary
+# Tic-Tac-Toe
 
 ## [Live Demo](https://melovii.github.io/tic-tac-toe/)
 
-Binary TicTacToe game created using JS Objects
+Binary Tic-Tac-Toe game created using JS Objects
 
 ### Resources used:
 
