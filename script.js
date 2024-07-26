@@ -1,40 +1,3 @@
-const popupButton = document.querySelector('#add-book');
-const closeButton = document.querySelector('.close-btn');
-const submitBook = document.querySelector('.form-element button');
-
-const library = new Library();
-
-popupButton.addEventListener('click', () => {
-    document.querySelector('.popup').classList.add('active');
-    document.querySelector('.center').classList.add('active');
-    document.body.classList.add('no-scroll');
-});
-
-closeButton.addEventListener('click', () => {
-    document.querySelector('.popup').classList.remove('active');
-    document.querySelector('.center').classList.remove('active');
-    document.body.classList.remove('no-scroll');
-});
-
-submitBook.addEventListener('click', (event) => {
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
-    const isRead = document.getElementById('read-check');
-    event.preventDefault();
-
-    if (!title || !author || !pages || pages <= 0) {
-        alert('Please fill in all fields with valid data.');
-        return;
-    }
-
-    library.addBook(title, author, pages, isRead);
-
-    document.querySelector('.popup').classList.remove('active');
-    document.querySelector('.center').classList.remove('active');
-    document.body.classList.remove('no-scroll');
-});
-
 class Book {
     constructor(title, author, pages, isRead) {
         this.title = title;
@@ -44,7 +7,7 @@ class Book {
     }
 
     toggleReadStatus(){
-        this.isRead = !this.isRead;
+        this.isRead =!this.isRead;
     }
 }
 
@@ -96,7 +59,7 @@ class Library {
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
             const index = this.books.indexOf(newBook);
-            if (index !== -1) {
+            if (index!== -1) {
                 this.books.splice(index, 1);
             }
             cardDIV.remove();
@@ -128,3 +91,40 @@ class Library {
         }
     }
 }
+
+const popupButton = document.querySelector('#add-book');
+const closeButton = document.querySelector('.close-btn');
+const submitBook = document.querySelector('.form-element button');
+
+const library = new Library();
+
+popupButton.addEventListener('click', () => {
+    document.querySelector('.popup').classList.add('active');
+    document.querySelector('.center').classList.add('active');
+    document.body.classList.add('no-scroll');
+});
+
+closeButton.addEventListener('click', () => {
+    document.querySelector('.popup').classList.remove('active');
+    document.querySelector('.center').classList.remove('active');
+    document.body.classList.remove('no-scroll');
+});
+
+submitBook.addEventListener('click', (event) => {
+    const title = document.getElementById('title').value;
+    const author = document.getElementById('author').value;
+    const pages = document.getElementById('pages').value;
+    const isRead = document.getElementById('read-check');
+    event.preventDefault();
+
+    if (!title ||!author ||!pages || pages <= 0) {
+        alert('Please fill in all fields with valid data.');
+        return;
+    }
+
+    library.addBook(title, author, pages, isRead);
+
+    document.querySelector('.popup').classList.remove('active');
+    document.querySelector('.center').classList.remove('active');
+    document.body.classList.remove('no-scroll');
+});
