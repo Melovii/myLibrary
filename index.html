@@ -26,19 +26,22 @@
         <div class="center">
             <div class="popup">
                 <div class="close-btn">&times;</div>
-                <form method="POST"> <!-- uhh use action=""  ???? -->
+                <form id="book-form" method="POST" novalidate>
                     <h2>Add a new book</h2>
                     <div class="form-element">
                         <label for="title">Title</label>
                         <input type="text" id="title" placeholder="Enter book title" maxlength="50" required>
+                        <div class="error-message" id="title-error"></div>
                     </div>
                     <div class="form-element">
                         <label for="author">Author</label>
                         <input type="text" id="author" placeholder="Enter book author" maxlength="50" required>
+                        <div class="error-message" id="author-error"></div>
                     </div>
                     <div class="form-element">
                         <label for="pages">Pages</label>
                         <input type="number" id="pages" placeholder="Enter number of pages" max="9999" required>
+                        <div class="error-message" id="pages-error"></div>
                     </div>
                     <div class="form-element">
                         <input type="checkbox" id="read-check">

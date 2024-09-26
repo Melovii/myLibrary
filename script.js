@@ -6,8 +6,8 @@ class Book {
         this.isRead = isRead;
     }
 
-    toggleReadStatus(){
-        this.isRead =!this.isRead;
+    toggleReadStatus() {
+        this.isRead = !this.isRead;
     }
 }
 
@@ -59,7 +59,7 @@ class Library {
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
             const index = this.books.indexOf(newBook);
-            if (index!== -1) {
+            if (index !== -1) {
                 this.books.splice(index, 1);
             }
             cardDIV.remove();
@@ -95,8 +95,10 @@ class Library {
 const popupButton = document.querySelector('#add-book');
 const closeButton = document.querySelector('.close-btn');
 const submitBook = document.querySelector('.form-element button');
-
-const library = new Library();
+const form = document.getElementById('book-form');
+const titleInput = document.getElementById('title');
+const authorInput = document.getElementById('author');
+const pagesInput = document.getElementById('pages');
 
 popupButton.addEventListener('click', () => {
     document.querySelector('.popup').classList.add('active');
@@ -111,20 +113,19 @@ closeButton.addEventListener('click', () => {
 });
 
 submitBook.addEventListener('click', (event) => {
-    const title = document.getElementById('title').value;
-    const author = document.getElementById('author').value;
-    const pages = document.getElementById('pages').value;
-    const isRead = document.getElementById('read-check');
     event.preventDefault();
-
-    if (!title ||!author ||!pages || pages <= 0) {
-        alert('Please fill in all fields with valid data.');
-        return;
+    if (!form.checkValidity()) {
+        event.stopPropagation();
+        form.reportValidity();
+    } else {
+        const title = titleInput.value;
+        const author = authorInput.value;
+        const pages = pagesInput.value;
+        const isRead = document.getElementById('read-check');
+        const library = new Library();
+        library.addBook(title, author, pages, isRead);
+        document.querySelector('.popup').classList.remove('active');
+        document.querySelector('.center').classList.remove('active');
+        document.body.classList.remove('no-scroll');
     }
-
-    library.addBook(title, author, pages, isRead);
-
-    document.querySelector('.popup').classList.remove('active');
-    document.querySelector('.center').classList.remove('active');
-    document.body.classList.remove('no-scroll');
 });
