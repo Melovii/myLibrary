@@ -1,302 +1,311 @@
-    html {
+html {
     position: relative;
     min-height: 100%;
-    }
+}
 
-    body {
-        background-color: var(--bg-color);
-    }
+body {
+    background-color: var(--bg-color);
+}
 
-    :root {
-        --white: #cbcbcb;
-        --bg-color: #191B1CFF;
-        --cool-red: B31E29FF;
-        --black: #191B1CFF;
-        /*--bg-color: #eeeeee;*/
-        --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    }
+:root {
+    --white: #cbcbcb;
+    --bg-color: #191B1CFF;
+    --cool-red: B31E29FF;
+    --black: #191B1CFF;
+    /*--bg-color: #eeeeee;*/
+    --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
 
-    * {
-        padding: 0;
-        margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-    #container {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        color: var(--white);
-    }
+#container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: var(--white);
+}
 
-    .no-scroll {
-        overflow: hidden;
-    }
+.no-scroll {
+    overflow: hidden;
+}
 
-    button, .close-btn {
-        transition: 200ms ease-in-out;
-    }
+button, .close-btn {
+    transition: 200ms ease-in-out;
+}
 
-    button:hover, .close-btn:hover {
-        background-color: var(--bg-color);
-        color: white;
-    }
+button:hover, .close-btn:hover {
+    background-color: var(--bg-color);
+    color: white;
+}
 
-    /* HEADER */
+/* HEADER */
 
-    .logo {
-        height: 40px;
-        width: auto;
-    }
+.logo {
+    height: 40px;
+    width: auto;
+}
 
-    header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 20px;
-        background-color: white;
-        box-shadow: var(--shadow);
-        color: var(--black);
-    }
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    box-shadow: var(--shadow);
+    color: var(--black);
+}
 
-    header > div > button {
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 16px;
-        border-width: 0;
-        cursor: pointer;
-        background-color: #eaeaea;
-        transition: 100ms ease-in-out;
-    }
+header > div > button {
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    border-width: 0;
+    cursor: pointer;
+    background-color: #eaeaea;
+    transition: 100ms ease-in-out;
+}
 
-    header > div > button:hover {
-        transform: scale(110%);
-        background-color: var(--bg-color);
-    }
+header > div > button:hover {
+    transform: scale(110%);
+    background-color: var(--bg-color);
+}
 
-    .left-side {
-        display: flex;
-        gap: 4px;
-        margin-left: 80px;
-    }
+.left-side {
+    display: flex;
+    gap: 4px;
+    margin-left: 80px;
+}
 
-    .right-side {
-        display: flex;
-        gap: 14px;
-        margin-right: 80px;
-    }
+.right-side {
+    display: flex;
+    gap: 14px;
+    margin-right: 80px;
+}
 
-    /* MAIN CONTENT */
+/* MAIN CONTENT */
 
-    main {
-        text-align: center;
-        place-items: center;
-        max-width: 1400px;
-        margin: 80px;
-        display: grid;
-        gap: 30px;
-        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    }
+main {
+    text-align: center;
+    place-items: center;
+    max-width: 1400px;
+    margin: 80px;
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
 
-    .card {
-        display: flex;
-        flex-direction: column;
-        width: 350px;
-        height: 400px;
-        align-items: center;
-        justify-content: space-evenly;
-        background-color: white;
-        color: var(--bg-color);
-        font-weight: 600;
-        font-size: 24px;
-        padding: 10px;
-        box-shadow: var(--shadow);
-        border-radius: 6px;
-        transition: transform 200ms linear;
-    }
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    height: 400px;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: white;
+    color: var(--bg-color);
+    font-weight: 600;
+    font-size: 24px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    border-radius: 6px;
+    transition: transform 200ms linear;
+}
 
-    .card:hover {
-        transform: scale(105%);
-    }
+.card:hover {
+    transform: scale(105%);
+}
 
-    .card > button {
-        padding: 20px 0;
-        width: 90%;
-        border-radius: 10px;
-        font-weight: 600;
-        font-size: 24px;
-        border-width: 0;
-        cursor: pointer;
-    }
+.card > button {
+    padding: 20px 0;
+    width: 90%;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 24px;
+    border-width: 0;
+    cursor: pointer;
+}
 
-    .read {
-        margin-top: 20px;
-        background-color: rgba(0, 128, 0, 0.5);
-    }
+.read {
+    margin-top: 20px;
+    background-color: rgba(0, 128, 0, 0.5);
+}
 
-    .read:hover {
-        background-color: rgba(0, 128, 0, 1);
-    }
+.read:hover {
+    background-color: rgba(0, 128, 0, 1);
+}
 
-    .not-read {
-        margin-top: 20px;
-        background-color: rgba(255, 0, 0, 0.5);
-    }
+.not-read {
+    margin-top: 20px;
+    background-color: rgba(255, 0, 0, 0.5);
+}
 
-    .not-read:hover {
-        background-color: rgb(204, 0, 0);
-    }
+.not-read:hover {
+    background-color: rgb(204, 0, 0);
+}
 
-    .remove:hover {
-        background-color: var(--bg-color);
-    }
+.remove:hover {
+    background-color: var(--bg-color);
+}
 
-    /* ADD BOOK POPUP */
+/* ADD BOOK POPUP */
 
-    .center {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-150%, -150%);
-        /* ARGGHHH */
-        background-color: rgba(43, 46, 47, 0.25);
-        width: 100%;
-        height: 100%;
-    }
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-150%, -150%);
+    /* ARGGHHH */
+    background-color: rgba(43, 46, 47, 0.25);
+    width: 100%;
+    height: 100%;
+}
 
-    .center.active {
-        transform: translate(-50%, -50%);
-    }
+.center.active {
+    transform: translate(-50%, -50%);
+}
 
-    .center button {
-        padding: 10px 20px;
-        font-weight: 600;
-        font-size: 16px;
-        background: var(--white);
-        color: var(--bg-color);
-        border: none;
-        outline: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+.center button {
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    background: var(--white);
+    color: var(--bg-color);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-    .popup {
-        text-align: start;
-        background: white;
-        color: var(--bg-color);
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(125%);
-        width: 350px;
-        padding: 30px 20px 0 20px;
-        box-shadow: var(--shadow);
-        border-radius: 10px;
-        transition: top 0ms ease-in-out 200ms,
-                    opacity 200ms ease-in-out 0ms,
-                    transform 200ms ease-in-out 0ms;
-    }
+.popup {
+    text-align: start;
+    background: white;
+    color: var(--bg-color);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(125%);
+    width: 350px;
+    padding: 30px 20px 0 20px;
+    box-shadow: var(--shadow);
+    border-radius: 10px;
+    transition: top 0ms ease-in-out 200ms,
+                opacity 200ms ease-in-out 0ms,
+                transform 200ms ease-in-out 0ms;
+}
 
-    .popup.active {
-        top: 50%;
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-        transition: top 0ms ease-in-out 0ms,
-        opacity 200ms ease-in-out 0ms,
-        transform 200ms ease-in-out 0ms;
-    }
+.popup.active {
+    top: 50%;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    transition: top 0ms ease-in-out 0ms,
+    opacity 200ms ease-in-out 0ms,
+    transform 200ms ease-in-out 0ms;
+}
 
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 20px;
-        height: 20px;
-        background: var(--white);
-        text-align: center;
-        line-height: 16px;
-        border-radius: 16px;
-        cursor: pointer;
-    }
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    background: var(--white);
+    text-align: center;
+    line-height: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+}
 
-    form h2 {
-        text-align: center;
-        color: var(--bg-color);
-        margin: 10px 0 20px;
-        font-size: 24px;
-    }
+form h2 {
+    text-align: center;
+    color: var(--bg-color);
+    margin: 10px 0 20px;
+    font-size: 24px;
+}
 
-    form .form-element {
-        margin: 15px 0;
-    }
+form .form-element {
+    margin: 15px 0;
+}
 
-    .popup.form > .form-element {
-        font-size: 14px;
-        color: var(--bg-color);
-    }
+.popup.form > .form-element {
+    font-size: 14px;
+    color: var(--bg-color);
+}
 
-    .form-element > input[type="text"],
-    .form-element > input[type="number"] {
-        margin-top: 5px;
-        display: block;
-        width: 93%;
-        border: 1px solid grey;
-        padding: 10px;
-        outline: none;
-        border-radius: 5px;
-    }
+.form-element > input[type="text"],
+.form-element > input[type="number"] {
+    margin-top: 5px;
+    display: block;
+    width: 93%;
+    border: 1px solid grey;
+    padding: 10px;
+    outline: none;
+    border-radius: 5px;
+}
 
-    .form-element > input[type="checkbox"]{
-        margin-right: 5px;
-        cursor: pointer;
-    }
+.form-element > input[type="checkbox"]{
+    margin-right: 5px;
+    cursor: pointer;
+}
 
-    .form-element > button {
-        width: 100%;
-        height: 40px;
-        border: none;
-        outline: none;
-        background-color: var(--white);
-        color: var(--bg-color);
-        border-radius: 10px;
-    }
+.form-element > button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: var(--white);
+    color: var(--bg-color);
+    border-radius: 10px;
+}
 
-    .form-element > button:hover {
-        background-color: var(--bg-color);
-        color: white;
-    }
+.form-element > button:hover {
+    background-color: var(--bg-color);
+    color: white;
+}
 
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
 
-    /* FOOTER */
+.error {
+    border: 1px solid red;
+}
 
-    footer {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 16px;
-        width: 100%;
-        padding: 16px;
-        font-size: 24px;
-        position: absolute;
-        bottom: 4px;
-        left: 0;
-    }
+/* FOOTER */
 
-    footer a {
-        width: 32px;
-        height: 32px;
-    }
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 16px;
+    font-size: 24px;
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+}
 
-    .github {
-        height: 32px;
-        width: auto;
-        color: var(--bg-color);
-        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
+footer a {
+    width: 32px;
+    height: 32px;
+}
 
-    .github:hover {
-        transform: scale(1.5);
-    }
+.github {
+    height: 32px;
+    width: auto;
+    color: var(--bg-color);
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.github:hover {
+    transform: scale(1.5);
+}
