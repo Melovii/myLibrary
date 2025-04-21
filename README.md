@@ -1,6 +1,6 @@
 # 📚 myLibrary
 
-A simple Node.js + Express + MySQL project to manage your library of books.  
+A simple Node.js + Express + MySQL project to manage your library of books.
 [🔗 Live Demo](https://melovii.github.io/myLibrary/)
 
 ---
