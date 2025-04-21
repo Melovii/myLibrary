@@ -17,50 +17,48 @@ class Library {
     }
 
     addBook(title, author, pages, isRead) {
-        let newBook = new Book(title.trim(), author.trim(), pages.trim(), isRead.checked);
-        this.addCard(title, author, pages, isRead, newBook);
+        const newBook = new Book(title.trim(), author.trim(), pages.trim(), isRead.checked);
         this.books.push(newBook);
+        this.addCard(newBook.title, newBook.author, newBook.pages, isRead, newBook);
+        this.saveToStorage();
     }
 
     addCard(title, author, pages, isRead, newBook) {
         const main = document.querySelector('main');
         const cardDIV = document.createElement('div');
         cardDIV.classList.add('card');
+
         const titlePara = document.createElement('p');
         titlePara.classList.add('title');
-        titlePara.textContent = `"${title}"`;
+        titlePara.textContent = title;
+
         const authorPara = document.createElement('p');
         authorPara.classList.add('author');
         authorPara.textContent = author;
+
         const pagesPara = document.createElement('p');
         pagesPara.classList.add('pages');
         pagesPara.textContent = `${pages} pages`;
-        const isReadButton = document.createElement('button');
 
-        if (isRead.checked) {
-            isReadButton.classList.add('read');
-            isReadButton.textContent = 'Read';
-        } else {
-            isReadButton.classList.add('not-read');
-            isReadButton.textContent = 'Not Read';
-        }
+        const isReadButton = document.createElement('button');
+        isReadButton.classList.add(newBook.isRead ? 'read' : 'not-read');
+        isReadButton.textContent = newBook.isRead ? 'Read' : 'Not Read';
 
         isReadButton.addEventListener('click', () => {
             newBook.toggleReadStatus();
-            if (newBook.isRead) {
-                this.updateReadStatus(isReadButton, newBook);
-            } else {
-                this.updateReadStatus(isReadButton, newBook);
-            }
-        })
+            this.updateReadStatus(isReadButton, newBook.isRead);
+            this.saveToStorage();
+        });
 
         const removeButton = document.createElement('button');
         removeButton.classList.add('remove');
         removeButton.textContent = 'Remove';
+
         removeButton.addEventListener('click', () => {
             const index = this.books.indexOf(newBook);
             if (index !== -1) {
                 this.books.splice(index, 1);
+                this.saveToStorage();
             }
             cardDIV.remove();
         });
@@ -77,21 +75,33 @@ class Library {
         document.getElementById('read-check').checked = false;
     }
 
-    updateReadStatus(button, book) {
-        if (button.textContent === 'Read') {
-            button.textContent = 'Not Read';
-            button.classList.toggle('not-read');
-            button.classList.toggle('read');
-            book.isRead = false;
-        } else {
-            button.textContent = 'Read';
-            button.classList.toggle('read');
-            button.classList.toggle('not-read');
-            book.isRead = true;
+    updateReadStatus(button, isRead) {
+        button.textContent = isRead ? 'Read' : 'Not Read';
+        button.classList.toggle('read', isRead);
+        button.classList.toggle('not-read', !isRead);
+    }
+
+    saveToStorage() {
+        localStorage.setItem('library', JSON.stringify(this.books));
+    }
+
+    loadFromStorage() {
+        const data = JSON.parse(localStorage.getItem('library'));
+        if (data) {
+            data.forEach(bookObj => {
+                const newBook = new Book(bookObj.title, bookObj.author, bookObj.pages, bookObj.isRead);
+                this.books.push(newBook);
+                this.addCard(newBook.title, newBook.author, newBook.pages, { checked: newBook.isRead }, newBook);
+            });
         }
     }
 }
 
+// Global instance
+const library = new Library();
+library.loadFromStorage();
+
+// Popup form logic
 const popupButton = document.querySelector('#add-book');
 const closeButton = document.querySelector('.close-btn');
 const submitBook = document.querySelector('.form-element button');
@@ -122,8 +132,9 @@ submitBook.addEventListener('click', (event) => {
         const author = authorInput.value;
         const pages = pagesInput.value;
         const isRead = document.getElementById('read-check');
-        const library = new Library();
+
         library.addBook(title, author, pages, isRead);
+
         document.querySelector('.popup').classList.remove('active');
         document.querySelector('.center').classList.remove('active');
         document.body.classList.remove('no-scroll');
