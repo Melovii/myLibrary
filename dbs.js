@@ -1,17 +1,13 @@
-// ! This file is responsible for connecting to the MySQL database.
-
-// ? Require the mysql2 package (MySQL client for Node.js which allows us to connect to a MySQL database from Node.js)
 const MySQL = require('mysql2');
 require('dotenv').config();
 
-// ? Create a connection to MySQL without a database
 const connection = MySQL.createConnection({
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'myLibrary'
 });
 
-// ? Connect to MySQL
 connection.connect((err) => {
     if (err) {
         console.error('Error connecting to the database:', err.stack);
@@ -19,7 +15,6 @@ connection.connect((err) => {
     }
     console.log('Connected to MySQL as id ' + connection.threadId);
 
-    // ? Create the database if it doesn't exist
     const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME || 'myLibrary'}`;
     connection.query(createDatabaseQuery, (err, results) => {
         if (err) {
@@ -28,7 +23,6 @@ connection.connect((err) => {
             console.log('Database created or already exists.');
         }
 
-        // ? Now connect to the newly created database
         const useDatabaseQuery = `USE ${process.env.DB_NAME || 'myLibrary'}`;
         connection.query(useDatabaseQuery, (err) => {
             if (err) {
@@ -37,18 +31,17 @@ connection.connect((err) => {
             }
             console.log(`Using database ${process.env.DB_NAME || 'myLibrary'}`);
 
-            // ? Set up tables
-			const createAuthorsTableQuery = `
-				CREATE TABLE IF NOT EXISTS Authors
+            const createAuthorsTableQuery = `
+                CREATE TABLE IF NOT EXISTS Authors
                 (
                     author_id   INT AUTO_INCREMENT,
                     name        VARCHAR(50),
                     PRIMARY KEY (author_id)
                 );
-			`;
+            `;
 
-			const createBooksTableQuery = `
-				CREATE TABLE IF NOT EXISTS Books
+            const createBooksTableQuery = `
+                CREATE TABLE IF NOT EXISTS Books
                 (
                     book_id     INT AUTO_INCREMENT,
                     author_id   INT,
@@ -58,10 +51,10 @@ connection.connect((err) => {
                     PRIMARY KEY (book_id),
                     FOREIGN KEY (author_id) REFERENCES Authors(author_id) ON DELETE CASCADE
                 );
-			`;
-			
-			const createUsersTableQuery = `
-			    CREATE TABLE IF NOT EXISTS Users
+            `;
+            
+            const createUsersTableQuery = `
+                CREATE TABLE IF NOT EXISTS Users
                 (
                     user_id     INT AUTO_INCREMENT,
                     name        VARCHAR(69),
@@ -72,9 +65,8 @@ connection.connect((err) => {
                     role ENUM('admin', 'user') DEFAULT 'user',
                     PRIMARY KEY (user_id)
                 );
-			`;
+            `;
 
-			// ? Run the queries sequentially
             connection.query(createAuthorsTableQuery, (err) => {
                 if (err) {
                     console.error('Error creating Authors table:', err);
@@ -95,12 +87,11 @@ connection.connect((err) => {
                         } else {
                             console.log('Users table created successfully.');
                         }
-
-                        // ? Close the connection after the tables are created
-                        connection.end();
                     });
                 });
             });
         });
     });
 });
+
+module.exports = connection;
