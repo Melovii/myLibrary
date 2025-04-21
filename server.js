@@ -14,7 +14,11 @@ app.use(express.static(path.join(__dirname)));
 
 // Route to get all books
 app.get('/books', (req, res) => {
-  const query = 'SELECT * FROM Books';
+  const query = `
+  	SELECT Books.*, Authors.name as author
+	FROM Books
+	JOIN Authors on Books.author_id = Authors.author_id
+  `;
   connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Error fetching books' });
