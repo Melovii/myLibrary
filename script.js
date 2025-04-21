@@ -73,6 +73,37 @@ class Library {
         }
     }
 
+	// TODO: Fix new div remove and isRead button not working
+	// async addBook(title, author, pages, isRead) {
+	// 	// Send data to backend first
+	// 	const response = await fetch('/addbook', {
+	// 		method: 'POST',
+	// 		headers: { 'Content-Type': 'application/json' },
+	// 		body: JSON.stringify({
+	// 			title: title.trim(),
+	// 			author: author.trim(),
+	// 			pages: pages.trim(),
+	// 			isRead: isRead.checked
+	// 		})
+	// 	});
+	
+	// 	if (response.ok) {
+	// 		const result = await response.json();
+	// 		const newBook = new Book(
+	// 			title.trim(),
+	// 			author.trim(),
+	// 			pages.trim(),
+	// 			isRead.checked,
+	// 			result.bookID // Pass the ID at creation time
+	// 		);
+	
+	// 		this.books.push(newBook);
+	// 		this.addCard(newBook.title, newBook.author, newBook.pages, isRead, newBook);
+	// 	} else {
+	// 		console.error('Failed to add book');
+	// 	}
+	// }
+
     // Remove a book from the database
     async removeBook(bookID, cardDIV) {
         const response = await fetch('/removeBook', {

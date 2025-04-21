@@ -79,7 +79,6 @@ app.delete('/removeBook', (req, res) => {
 	});
 });
 
-// Route to update read status // TODO: FIX THIS SHIT
 app.put('/updateReadStatus', (req, res) => {
   const { bookID, isRead } = req.body;
   const query = 'UPDATE Books SET is_read = ? WHERE book_id = ?';
