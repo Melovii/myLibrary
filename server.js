@@ -1,23 +1,23 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path');
+const bcrypt = require('bcrypt');
 dotenv.config();
 
-// Import the database connection
 const connection = require('./dbs');
 
 const app = express();
+
 app.use(express.json());
 
-// Serve static files directly from the root directory
-app.use(express.static(path.join(__dirname)));
+// API routes first
 
 // Route to get all books
 app.get('/books', (req, res) => {
   const query = `
-  	SELECT Books.*, Authors.name as author
-	FROM Books
-	JOIN Authors on Books.author_id = Authors.author_id
+    SELECT Books.*, Authors.name as author
+    FROM Books
+    JOIN Authors on Books.author_id = Authors.author_id
   `;
   connection.query(query, (err, results) => {
     if (err) {
@@ -68,15 +68,15 @@ app.post('/addBook', (req, res) => {
 
 // Route to remove a book
 app.delete('/removeBook', (req, res) => {
-	const { bookID } = req.body;
-	const query = 'DELETE FROM Books WHERE book_id = ?';
-  
-	connection.query(query, [bookID], (err, results) => {
-	  if (err) {
-		return res.status(500).json({ error: 'Error removing book' });
-	  }
-	  res.status(200).json({ message: 'Book removed successfully' });
-	});
+  const { bookID } = req.body;
+  const query = 'DELETE FROM Books WHERE book_id = ?';
+
+  connection.query(query, [bookID], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error removing book' });
+    }
+    res.status(200).json({ message: 'Book removed successfully' });
+  });
 });
 
 app.put('/updateReadStatus', (req, res) => {
@@ -90,7 +90,50 @@ app.put('/updateReadStatus', (req, res) => {
   });
 });
 
-// Route to serve index.html from the root directory
+// Register a new user
+app.post('/register', async (req, res) => {
+  const { name, password } = req.body;
+
+  if (!name || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  try {
+    // Check if username already exists
+    const checkQuery = 'SELECT * FROM Users WHERE name = ?';
+    connection.query(checkQuery, [name], async (err, results) => {
+      if (err) {
+        return res.status(500).json({ error: 'Database error while checking user' });
+      }
+
+      if (results.length > 0) {
+        return res.status(409).json({ error: 'Username already taken' });
+      }
+
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Insert the user
+      const insertQuery = `
+        INSERT INTO Users (name, pass_hash)
+        VALUES (?, ?)
+      `;
+      connection.query(insertQuery, [name, hashedPassword], (err) => {
+        if (err) {
+          return res.status(500).json({ error: 'Error inserting user' });
+        }
+        res.status(201).json({ message: 'User registered successfully' });
+      });
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// Serve static files from root directory
+app.use(express.static(path.join(__dirname)));
+
+// Serve index.html on root GET request explicitly
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
