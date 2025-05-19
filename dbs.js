@@ -16,7 +16,7 @@ connection.connect((err) => {
     console.log('Connected to MySQL as id ' + connection.threadId);
 
     const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME || 'myLibrary'}`;
-    connection.query(createDatabaseQuery, (err, results) => {
+    connection.query(createDatabaseQuery, (err) => {
         if (err) {
             console.error('Error creating database:', err);
         } else {
@@ -31,61 +31,67 @@ connection.connect((err) => {
             }
             console.log(`Using database ${process.env.DB_NAME || 'myLibrary'}`);
 
-            const createAuthorsTableQuery = `
-                CREATE TABLE IF NOT EXISTS Authors
-                (
-                    author_id   INT AUTO_INCREMENT,
-                    name        VARCHAR(50),
-                    PRIMARY KEY (author_id)
-                );
-            `;
-
-            const createBooksTableQuery = `
-                CREATE TABLE IF NOT EXISTS Books
-                (
-                    book_id     INT AUTO_INCREMENT,
-                    author_id   INT,
-                    pages       INT,
-                    title       VARCHAR(50),
-                    is_read     BOOLEAN DEFAULT FALSE,
-                    PRIMARY KEY (book_id),
-                    FOREIGN KEY (author_id) REFERENCES Authors(author_id) ON DELETE CASCADE
-                );
-            `;
-            
+            // Create Users table
             const createUsersTableQuery = `
                 CREATE TABLE IF NOT EXISTS Users
                 (
                     user_id     INT AUTO_INCREMENT,
-                    name        VARCHAR(69),
-                    email       VARCHAR(69) UNIQUE,
-                    pass_hash   VARCHAR(255),
+                    name        VARCHAR(69) UNIQUE NOT NULL,
+                    pass_hash   VARCHAR(255) NOT NULL,
                     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    books_read  INT DEFAULT 0,
-                    role ENUM('admin', 'user') DEFAULT 'user',
                     PRIMARY KEY (user_id)
                 );
             `;
 
-            connection.query(createAuthorsTableQuery, (err) => {
+			// TODO: Ask user for category in the add book form
+            // Create Categories table linked to Users
+            const createCategoriesTableQuery = `
+                CREATE TABLE IF NOT EXISTS Categories
+                (
+                    category_id INT AUTO_INCREMENT,
+                    user_id     INT NOT NULL,
+                    name        VARCHAR(50) NOT NULL,
+                    UNIQUE (user_id, name),
+                    PRIMARY KEY (category_id),
+                    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
+                );
+            `;
+
+            // Create Books table linked to Users and Categories
+            const createBooksTableQuery = `
+                CREATE TABLE IF NOT EXISTS Books
+                (
+                    book_id     INT AUTO_INCREMENT,
+                    user_id     INT NOT NULL,
+                    category_id INT NOT NULL,
+                    title       VARCHAR(100) NOT NULL,
+                    pages       INT,
+                    is_read     BOOLEAN DEFAULT FALSE,
+                    PRIMARY KEY (book_id),
+                    FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+                    FOREIGN KEY (category_id) REFERENCES Categories(category_id) ON DELETE SET NULL
+                );
+            `;
+
+            connection.query(createUsersTableQuery, (err) => {
                 if (err) {
-                    console.error('Error creating Authors table:', err);
-                } else {
-                    console.log('Authors table created successfully.');
+                    console.error('Error creating Users table:', err);
+                    return;
                 }
+                console.log('Users table created successfully.');
 
-                connection.query(createBooksTableQuery, (err) => {
+                connection.query(createCategoriesTableQuery, (err) => {
                     if (err) {
-                        console.error('Error creating Books table:', err);
-                    } else {
-                        console.log('Books table created successfully.');
+                        console.error('Error creating Categories table:', err);
+                        return;
                     }
+                    console.log('Categories table created successfully.');
 
-                    connection.query(createUsersTableQuery, (err) => {
+                    connection.query(createBooksTableQuery, (err) => {
                         if (err) {
-                            console.error('Error creating Users table:', err);
+                            console.error('Error creating Books table:', err);
                         } else {
-                            console.log('Users table created successfully.');
+                            console.log('Books table created successfully.');
                         }
                     });
                 });
