@@ -1,65 +1,65 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>myLibrary</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" href="./media/icons/logo.png">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>myLibrary</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="./media/icons/logo.png">
 </head>
 <body>
 
 <div id="container">
-    <header>
-        <div class="left-side">
-            <img class="logo" src="media/icons/logo.svg" alt="logo">
-            <h1>myLibrary</h1>
-        </div>
-        <div class="right-side">
-            <button id="add-book">+ Add Book</button>
-            <button class="login">Log In</button>
-        </div>
-    </header>
-    <main>
-        <div class="center">
-            <div class="popup">
-                <div class="close-btn">&times;</div>
-                <form id="book-form" method="POST" novalidate>
-                    <h2>Add a new book</h2>
-                    <div class="form-element">
-                        <label for="title">Title</label>
-                        <input type="text" id="title" placeholder="Enter book title" maxlength="50" required>
-                        <div class="error-message" id="title-error"></div>
-                    </div>
-                    <div class="form-element">
-                        <label for="author">Author</label>
-                        <input type="text" id="author" placeholder="Enter book author" maxlength="50" required>
-                        <div class="error-message" id="author-error"></div>
-                    </div>
-                    <div class="form-element">
-                        <label for="pages">Pages</label>
-                        <input type="number" id="pages" placeholder="Enter number of pages" max="9999" required>
-                        <div class="error-message" id="pages-error"></div>
-                    </div>
-                    <div class="form-element">
-                        <input type="checkbox" id="read-check">
-                        <label for="read-check">Finished reading</label>
-                        <button type="submit" class="form-element">Add Book</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <p>Copyright © 2024 melovii</p>
-        <a href="https://github.com/melovii" target="blank">
-            <img class="github" src="media/icons/github.png" aria-hidden="true" alt="github logo"></img>
-        </a>
-    </footer>
+  <header id="home-header">
+    <div class="home-header-center left-side">
+      <img class="logo" src="media/icons/logo.svg" alt="logo">
+      <h1>myLibrary</h1>
+    </div>
+  </header>
+  <main>
+    <div class="auth-buttons">
+      <button id="login">Log In</button>
+      <button id="register">Register</button>
+    </div>
+    <div class="center">
+    </div>
+    <div class="center" id="registerCenter">
+      <div class="registerPopup">
+        <div class="close-btn" id="registerCloseButton">&times;</div>
+        <form id="register-form" method="POST" novalidate>
+          <h2>Register an account</h2>
+
+          <div class="form-element">
+            <label for="usernameReg">Username</label>
+            <input type="text" id="usernameReg" placeholder="Enter a username" maxlength="69" required>
+            <div class="error-message" id="usernameReg-error"></div>
+          </div>
+
+          <div class="form-element">
+            <label for="passwordReg">Password</label>
+            <input type="password" id="passwordReg" placeholder="Enter a password" maxlength="255" required>
+			<div id="registerSuccessMessage" style="color: green; margin-top: 10px; display: none;"></div>
+            <div class="error-message" id="passwordReg-error"></div>
+          </div>
+
+          <div class="form-element">
+            <button type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <p>Copyright © 2024 melovii</p>
+    <a href="https://github.com/melovii" target="blank">
+      <img class="github" src="media/icons/github.png" aria-hidden="true" alt="github logo"></img>
+    </a>
+  </footer>
 </div>
 
 </body>
-<script src="./script.js"></script>
+<script src="./homepage-script.js"></script>
 </html>

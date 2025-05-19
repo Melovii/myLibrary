@@ -60,6 +60,14 @@ header {
     color: var(--black);
 }
 
+#home-header {
+    justify-content: center;
+}
+
+div.home-header-center {
+    margin-left: 0;
+}
+
 header > div > button {
     padding: 10px 20px;
     border-radius: 10px;
@@ -155,7 +163,7 @@ main {
 
 /* ADD BOOK POPUP */
 
-.center {
+.center, #registerCenter{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -166,11 +174,11 @@ main {
     height: 100%;
 }
 
-.center.active {
+.center.active, #registerCenter.active {
     transform: translate(-50%, -50%);
 }
 
-.center button {
+.center button, #registerCenter button {
     padding: 10px 20px;
     font-weight: 600;
     font-size: 16px;
@@ -182,7 +190,7 @@ main {
     border-radius: 5px;
 }
 
-.popup {
+.addBookPopup, .registerPopup {
     text-align: start;
     background: white;
     color: var(--bg-color);
@@ -200,7 +208,11 @@ main {
                 transform 200ms ease-in-out 0ms;
 }
 
-.popup.active {
+div.registerPopup {
+
+}
+
+.addBookPopup.active, .registerPopup.active {
     top: 50%;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
@@ -239,7 +251,8 @@ form .form-element {
 }
 
 .form-element > input[type="text"],
-.form-element > input[type="number"] {
+.form-element > input[type="number"],
+.form-element > input[type="password"]{
     margin-top: 5px;
     display: block;
     width: 93%;
@@ -291,7 +304,6 @@ footer {
     font-size: 24px;
     position: absolute;
     bottom: 4px;
-    left: 0;
 }
 
 footer a {
@@ -308,4 +320,35 @@ footer a {
 
 .github:hover {
     transform: scale(1.5);
+}
+
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+    width: 100%;
+    gap: 30px;
+}
+
+.auth-buttons button {
+    width: 300px;
+    height: 60px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    color: var(--bg-color);
+    box-shadow: var(--shadow);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.auth-buttons button:hover {
+    background-color: var(--bg-color);
+    color: white;
+    transform: scale(1.05);
 }
