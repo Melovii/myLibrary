@@ -1,19 +1,9 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const path = require('path');
-const bcrypt = require('bcrypt');
-dotenv.config();
-
-const connection = require('./dbs');
-
-const app = express();
-
-app.use(express.json());
-
-// API routes first
+const router = express.Router();
+const connection = require('../dbs');
 
 // Route to get all books
-app.get('/books', (req, res) => {
+router.get('/books', (req, res) => {
   const query = `
     SELECT Books.*, Authors.name as author
     FROM Books
@@ -28,7 +18,7 @@ app.get('/books', (req, res) => {
 });
 
 // Route to add a book
-app.post('/addBook', (req, res) => {
+router.post('/addBook', (req, res) => {
   const { title, author, pages, isRead } = req.body;
 
   const authorQuery = 'SELECT author_id FROM Authors WHERE name = ?';
@@ -67,7 +57,7 @@ app.post('/addBook', (req, res) => {
 });
 
 // Route to remove a book
-app.delete('/removeBook', (req, res) => {
+router.delete('/removeBook', (req, res) => {
   const { bookID } = req.body;
   const query = 'DELETE FROM Books WHERE book_id = ?';
 
@@ -79,7 +69,8 @@ app.delete('/removeBook', (req, res) => {
   });
 });
 
-app.put('/updateReadStatus', (req, res) => {
+// Route to update read status
+router.put('/updateReadStatus', (req, res) => {
   const { bookID, isRead } = req.body;
   const query = 'UPDATE Books SET is_read = ? WHERE book_id = ?';
   connection.query(query, [isRead, bookID], (err) => {
@@ -90,55 +81,4 @@ app.put('/updateReadStatus', (req, res) => {
   });
 });
 
-// Register a new user
-app.post('/register', async (req, res) => {
-  const { name, password } = req.body;
-
-  if (!name || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
-  }
-
-  try {
-    // Check if username already exists
-    const checkQuery = 'SELECT * FROM Users WHERE name = ?';
-    connection.query(checkQuery, [name], async (err, results) => {
-      if (err) {
-        return res.status(500).json({ error: 'Database error while checking user' });
-      }
-
-      if (results.length > 0) {
-        return res.status(409).json({ error: 'Username already taken' });
-      }
-
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Insert the user
-      const insertQuery = `
-        INSERT INTO Users (name, pass_hash)
-        VALUES (?, ?)
-      `;
-      connection.query(insertQuery, [name, hashedPassword], (err) => {
-        if (err) {
-          return res.status(500).json({ error: 'Error inserting user' });
-        }
-        res.status(201).json({ message: 'User registered successfully' });
-      });
-    });
-  } catch (err) {
-    res.status(500).json({ error: 'Server error' });
-  }
-});
-
-// Serve static files from root directory
-app.use(express.static(path.join(__dirname)));
-
-// Serve index.html on root GET request explicitly
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = router;
