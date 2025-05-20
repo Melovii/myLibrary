@@ -74,7 +74,7 @@ header > div > button {
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 24px;
     border-width: 0;
     cursor: pointer;
     background-color: #eaeaea;
@@ -193,6 +193,11 @@ main {
     border-radius: 5px;
 }
 
+#registerCenter button:hover, #loginCenter button:hover {
+    background-color: var(--bg-color) !important;
+    color: white !important;
+}
+
 #add-book {
 	font-size: 24px;
 }
@@ -282,8 +287,8 @@ form .form-element {
 }
 
 .form-element > button:hover {
-    background-color: var(--bg-color);
-    color: white;
+    background-color: var(--bg-color); !important;
+    color: white !important;
 }
 
 .error-message {
@@ -351,7 +356,7 @@ footer a {
 }
 
 .auth-buttons button:hover {
-    background-color: var(--bg-color);
+    background-color: rgba(40, 42, 42, 0.69);
     color: white;
     transform: scale(1.05);
 }

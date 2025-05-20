@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
 dotenv.config();
@@ -6,6 +7,13 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(session({
+  secret: 'somethingSecretIDK', // 🔐 Replace with a secure string in production
+  resave: false,
+  saveUninitialized: false
+}));
+
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, '..', 'public')));

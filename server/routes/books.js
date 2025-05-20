@@ -2,10 +2,20 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../dbs');
 
+// 🆕 Optional helper middleware
+function requireLogin(req, res, next) {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: 'Not logged in' });
+  }
+  next();
+}
+
 // API routes first
 
 // Route to get all books
 router.get('/books', (req, res) => {
+  const userId = req.session.userId;
+  if (!userId) return res.status(401).json({ error: 'User not logged in' });
   const query = `
     SELECT 
       b.book_id,
@@ -18,10 +28,10 @@ router.get('/books', (req, res) => {
     FROM Books b
     LEFT JOIN BookCategories bc ON b.book_id = bc.book_id
     LEFT JOIN Categories c ON bc.category_id = c.category_id
-    WHERE b.user_id = 1
+    WHERE b.user_id = ?
   `;
 
-  connection.query(query, (err, results) => {
+  connection.query(query, [userId], (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Error fetching books' });
     }
@@ -32,8 +42,10 @@ router.get('/books', (req, res) => {
 
 // Route to add a book
 router.post('/addBook', (req, res) => {
-  const { title, author, pages, isRead, userId, categoryName } = req.body;
+  const { title, author, pages, isRead, categoryName } = req.body;
 
+  const userId = req.session.userId;
+  if (!userId) return res.status(401).json({ error: 'User not logged in' });
   const query = `
     INSERT INTO Books (title, author, pages, is_read, user_id)
     VALUES (?, ?, ?, ?, ?)
@@ -86,28 +98,44 @@ router.post('/addBook', (req, res) => {
 
 // Route to remove a book
 router.delete('/removeBook', (req, res) => {
-  const { bookID } = req.body;
-  const query = 'DELETE FROM Books WHERE book_id = ?';
+  const userId = req.session.userId;
+  console.log('DELETE /removeBook userId:', userId);
+  console.log('Body:', req.body);
 
-  connection.query(query, [bookID], (err, results) => {
+  if (!userId) return res.status(401).json({ error: 'User not logged in' });
+
+  const { bookID } = req.body;
+  const query = 'DELETE FROM Books WHERE book_id = ? AND user_id = ?';
+
+  connection.query(query, [bookID, userId], (err, results) => {
     if (err) {
+      console.error('Error removing book:', err);
       return res.status(500).json({ error: 'Error removing book' });
     }
     res.status(200).json({ message: 'Book removed successfully' });
   });
 });
 
+
 // Route to update read status
 router.put('/updateReadStatus', (req, res) => {
+  const userId = req.session.userId;
+  console.log('PUT /updateReadStatus userId:', userId);
+  console.log('Body:', req.body);
+
+  if (!userId) return res.status(401).json({ error: 'User not logged in' });
+
   const { bookID, isRead } = req.body;
-  const query = 'UPDATE Books SET is_read = ? WHERE book_id = ?';
-  
-  connection.query(query, [isRead, bookID], (err) => {
+  const query = 'UPDATE Books SET is_read = ? WHERE book_id = ? AND user_id = ?';
+
+  connection.query(query, [isRead, bookID, userId], (err) => {
     if (err) {
+      console.error('Error updating read status:', err);
       return res.status(500).json({ error: 'Error updating read status' });
     }
     res.status(200).json({ message: 'Read status updated successfully' });
   });
 });
+
 
 module.exports = router;

@@ -193,4 +193,8 @@ loginForm.addEventListener('submit', async (e) => {
   }
 });
 
+// document.getElementById('logout').addEventListener('click', () => {
+//   window.location.href = '/logout';
+// });
+
 

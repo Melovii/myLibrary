@@ -60,11 +60,8 @@ export function setupFormHandlers(library) {
         const pages = pagesInput.value;
         const category = categorySelect.value;
 
-        // TODO: CHANGE IT LATER :SOB:
-        const userId = 1;
-
         // Pass category to library method too (update your `addBook()` if needed)
-        library.addBook(title, author, pages, isRead.checked, category, userId);
+        library.addBook(title, author, pages, isRead.checked, category);
 
         // Close popup and reset form
         document.querySelector('.popup').classList.remove('active');

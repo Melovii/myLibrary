@@ -8,22 +8,40 @@ export class Library {
 
     // Fetch all books from the database
     async loadFromDB() {
-        const response = await fetch('/books');
-        const data = await response.json();
-        data.forEach(bookOBJ => {
-            const newBook = new Book(
-                bookOBJ.title,
-                bookOBJ.author,
-                bookOBJ.pages,
-                bookOBJ.is_read,
-                bookOBJ.book_id,
-                bookOBJ.category_name
-            );
-            this.books.push(newBook);
-            this.addCard(newBook.title, newBook.author, newBook.pages, { checked: newBook.isRead }, newBook);
-        });
-        console.log('Books loaded from database:', this.books);
+        try {
+            const response = await fetch('/books');
+            if (!response.ok) {
+                console.error('Failed to load books: Not logged in or server error');
+                return;
+            }
+
+            const data = await response.json();
+            data.forEach(bookOBJ => {
+                const newBook = new Book(
+                    bookOBJ.title,
+                    bookOBJ.author,
+                    bookOBJ.pages,
+                    bookOBJ.is_read,
+                    bookOBJ.book_id,
+                    bookOBJ.category_name
+                );
+                this.books.push(newBook);
+                this.addCard(
+                    newBook.title,
+                    newBook.author,
+                    newBook.pages,
+                    { checked: newBook.isRead },
+                    newBook
+                );
+            });
+
+            console.log('Books loaded from database:', this.books);
+            this.toggleEmptyLibraryMessage();
+        } catch (error) {
+            console.error('Error loading books from DB:', error);
+        }
     }
+
 
     // Fetch and display all books from the database for debugging
     async displayBooksFromDB() {
@@ -37,8 +55,8 @@ export class Library {
     }
 
     // Add a new book to the database
-    async addBook(title, author, pages, isRead, categoryName, userId) {
-        const newBook = new Book(title.trim(), author.trim(), pages.trim(), isRead.checked);
+    async addBook(title, author, pages, isRead, categoryName) {
+        const newBook = new Book(title.trim(), author.trim(), pages.trim(), isRead, null, categoryName);
 
 		// TODO: CHANGE USER_ID LATER :SOB:
         const response = await fetch('/addBook', {
@@ -49,7 +67,6 @@ export class Library {
                 author: newBook.author,
                 pages: newBook.pages,
                 isRead: newBook.isRead,
-				userId: userId, // Pass userId to the server (Replace with actual user ID later on)
                 categoryName: categoryName // send the name instead of number
             })
         });
@@ -60,6 +77,7 @@ export class Library {
           
             this.books.push(newBook);
             this.addCard(newBook.title, newBook.author, newBook.pages, isRead, newBook);
+            this.toggleEmptyLibraryMessage();
         } else {
             console.error('Error adding book');
         }
@@ -83,6 +101,7 @@ export class Library {
                 this.books.splice(index, 1);
             }
             cardDIV.remove();
+            this.toggleEmptyLibraryMessage();
             library.displayBooksFromDB(); // ! could be this. instead !
         } else {
             console.error('Error removing book');
@@ -203,4 +222,15 @@ export class Library {
         document.getElementById('pages').value = '';
         document.getElementById('read-check').checked = false;
     }
+
+    toggleEmptyLibraryMessage() {
+        const emptyMessage = document.getElementById('empty-library-message');
+        const cards = document.querySelectorAll('.card');
+        if (cards.length === 0) {
+            emptyMessage.style.display = 'block';
+        } else {
+            emptyMessage.style.display = 'none';
+        }
+    }
+
 }
