@@ -48,9 +48,11 @@ router.delete('/removeBook', (req, res) => {
   });
 });
 
+// Route to update read status
 router.put('/updateReadStatus', (req, res) => {
   const { bookID, isRead } = req.body;
   const query = 'UPDATE Books SET is_read = ? WHERE book_id = ?';
+  
   connection.query(query, [isRead, bookID], (err) => {
     if (err) {
       return res.status(500).json({ error: 'Error updating read status' });

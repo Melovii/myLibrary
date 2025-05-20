@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const connection = require('../dbs');
 
-// Logion a user //TODO: (CHECK IF THIS SHIT IS GOOD DAWG)
+// Login a user //TODO: (CHECK IF THIS SHIT IS GOOD DAWG)
 router.post('/login', async (req, res) => {
   const { name, password } = req.body;
   console.log("Received login request:", req.body);
@@ -82,6 +82,7 @@ router.post('/register', async (req, res) => {
         INSERT INTO Users (username, pass_hash)
         VALUES (?, ?)
       `;
+      
       connection.query(insertQuery, [name, hashedPassword], (err) => {
         if (err) {
 			console.log("Error inserting user:", err);

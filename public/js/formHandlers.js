@@ -30,10 +30,10 @@ export function setupFormHandlers(library) {
             const author = authorInput.value;
             const pages = pagesInput.value;
             const isRead = document.getElementById('read-check');
+          
 			// TODO: CHANGE IT LATER :SOB:
 			const userId = 1; // Assuming userId is 1 for now, you can change this as needed
             library.addBook(title, author, pages, isRead, userId);
-
             document.querySelector('.popup').classList.remove('active');
             document.querySelector('.center').classList.remove('active');
             document.body.classList.remove('no-scroll');

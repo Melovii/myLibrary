@@ -48,19 +48,24 @@ export class Library {
                 author: newBook.author,
                 pages: newBook.pages,
                 isRead: newBook.isRead,
-				userId: userId // Pass userId to the server (Replace with actual user ID later on)
+				        userId: userId // Pass userId to the server (Replace with actual user ID later on)
+
             })
         });
 
         if (response.ok) {
             const data = await response.json();
             newBook.id = String(data.bookId); // Set the ID from database response
+          
             this.books.push(newBook);
             this.addCard(newBook.title, newBook.author, newBook.pages, isRead, newBook);
         } else {
             console.error('Error adding book');
         }
     }
+  
+    // location.reload();
+
 
     // Remove a book from the database
     async removeBook(bookID, cardDIV) {
@@ -77,7 +82,7 @@ export class Library {
                 this.books.splice(index, 1);
             }
             cardDIV.remove();
-            library.displayBooksFromDB();
+            library.displayBooksFromDB(); // ! could be this. instead !
         } else {
             console.error('Error removing book');
         }
@@ -105,7 +110,6 @@ export class Library {
             return;
         }
 
-        // Update button appearance
         button.textContent = book.isRead ? 'Read' : 'Not Read';
         button.classList.toggle('read', book.isRead);
         button.classList.toggle('not-read', !book.isRead);
