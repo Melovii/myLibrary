@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>myLibrary</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="icon" href="/media/icons/logo.png">
+</head>
+<body>
+
+<div id="container">
+  <header id="home-header">
+    <div class="home-header-center left-side">
+      <img class="logo" src="/media/icons/logo.svg" alt="logo">
+      <h1>myLibrary</h1>
+    </div>
+  </header>
+  <main>
+    <div class="auth-buttons">
+      <button id="login">Log In</button>
+      <button id="register">Register</button>
+    </div>
+
+
+    <div class="center" id="loginCenter">
+      <div class="loginPopup">
+        <div class="close-btn" id="loginCloseButton">&times;</div>
+        <form id="login-form" method="POST" novalidate>
+          <h2>Login</h2>
+
+          <div class="form-element">
+            <label for="usernameLogin">Username</label>
+            <input type="text" id="usernameLogin" placeholder="Enter a username" maxlength="69" required>
+            <div class="error-message" id="usernameLogin-error"></div>
+          </div>
+
+          <div class="form-element">
+            <label for="passwordLogin">Password</label>
+            <input type="password" id="passwordLogin" placeholder="Enter a password" maxlength="255" required>
+            <div id="loginSuccessMessage" style="color: green; margin-top: 10px; display: none;"></div>
+            <div class="error-message" id="passwordLogin-error"></div>
+          </div>
+
+          <div class="form-element">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="center" id="registerCenter">
+      <div class="registerPopup">
+        <div class="close-btn" id="registerCloseButton">&times;</div>
+        <form id="register-form" method="POST" novalidate>
+          <h2>Register an account</h2>
+
+          <div class="form-element">
+            <label for="usernameReg">Username</label>
+            <input type="text" id="usernameReg" placeholder="Enter a username" maxlength="69" required>
+            <div class="error-message" id="usernameReg-error"></div>
+          </div>
+
+          <div class="form-element">
+            <label for="passwordReg">Password</label>
+            <input type="password" id="passwordReg" placeholder="Enter a password" maxlength="255" required>
+			<div id="registerSuccessMessage" style="color: green; margin-top: 10px; display: none;"></div>
+            <div class="error-message" id="passwordReg-error"></div>
+          </div>
+
+          <div class="form-element">
+            <button type="submit">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    <p>Copyright © 2025 melovii</p>
+    <a href="https://github.com/melovii" target="blank">
+      <img class="github" src="media/icons/github.png" aria-hidden="true" alt="github logo"></img>
+    </a>
+  </footer>
+</div>
+
+</body>
+<script type="module" src="/js/auth.js"></script>
+</html>
