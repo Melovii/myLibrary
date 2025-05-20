@@ -57,18 +57,18 @@ connection.connect((err) => {
 				);
 			`;
 
-			connection.query(createBooksTableQuery, (err) => {
+			connection.query(createUsersTableQuery, (err) => {
 				if (err) {
-					console.error('Error creating Books table:', err);
+					console.error('Error creating Users table:', err);
 				} else {
-					console.log('Books table created successfully.');
+					console.log('Users table created successfully.');
 				}
 
-				connection.query(createUsersTableQuery, (err) => {
+				connection.query(createBooksTableQuery, (err) => {
 					if (err) {
-						console.error('Error creating Users table:', err);
+						console.error('Error creating Books table:', err);
 					} else {
-						console.log('Users table created successfully.');
+						console.log('Books table created successfully.');
 					}
 				});
 			});
