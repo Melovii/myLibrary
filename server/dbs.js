@@ -1,0 +1,79 @@
+const MySQL = require('mysql2');
+require('dotenv').config();
+
+const connection = MySQL.createConnection({
+	host: process.env.DB_HOST || 'localhost',
+	user: process.env.DB_USER || 'root',
+	password: process.env.DB_PASSWORD || '',
+	database: process.env.DB_NAME || 'myLibrary'
+});
+
+connection.connect((err) => {
+	if (err) {
+		console.error('Error connecting to the database:', err.stack);
+		return;
+	}
+	console.log('Connected to MySQL as id ' + connection.threadId);
+
+	// TODO: Create categories table later
+	const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME || 'myLibrary'}`;
+	connection.query(createDatabaseQuery, (err, results) => {
+		if (err) {
+			console.error('Error creating database:', err);
+		} else {
+			console.log('Database created or already exists.');
+		}
+
+		const useDatabaseQuery = `USE ${process.env.DB_NAME || 'myLibrary'}`;
+		connection.query(useDatabaseQuery, (err) => {
+			if (err) {
+				console.error('Error selecting the database:', err);
+				return;
+			}
+			console.log(`Using database ${process.env.DB_NAME || 'myLibrary'}`);
+			
+			const createUsersTableQuery = `
+				CREATE TABLE IF NOT EXISTS Users
+				(
+					user_id     INT AUTO_INCREMENT,
+					username    VARCHAR(69),
+					pass_hash   VARCHAR(255),
+					created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+					PRIMARY KEY (user_id)
+				);
+			`;
+
+			const createBooksTableQuery = `
+				CREATE TABLE IF NOT EXISTS Books
+				(
+					book_id     INT AUTO_INCREMENT,
+					user_id     INT NOT NULL,
+					title       VARCHAR(50),
+					author      VARCHAR(50),
+					pages       INT,
+					is_read     BOOLEAN DEFAULT FALSE,
+					PRIMARY KEY (book_id),
+					FOREIGN KEY (user_id) REFERENCES Users(user_id)
+				);
+			`;
+
+			connection.query(createBooksTableQuery, (err) => {
+				if (err) {
+					console.error('Error creating Books table:', err);
+				} else {
+					console.log('Books table created successfully.');
+				}
+
+				connection.query(createUsersTableQuery, (err) => {
+					if (err) {
+						console.error('Error creating Users table:', err);
+					} else {
+						console.log('Users table created successfully.');
+					}
+				});
+			});
+		});
+	});
+});
+
+module.exports = connection;
