@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const connection = require('../dbs');
 
+// router.get('/books/:userId', (req, res) => {
+//   const userId = req.params.userId;
+//
+//   const query = 'SELECT * FROM Books WHERE user_id = ?';
+//
+//   connection.query(query, [userId], (err, results) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Error fetching books' });
+//     }
+//     res.status(200).json(results);
+//   });
+// });
+
+
 // Route to get all books
 router.get('/books', (req, res) => {
   const query = `

@@ -23,8 +23,35 @@
       <button id="login">Log In</button>
       <button id="register">Register</button>
     </div>
-    <div class="center">
+
+
+    <div class="center" id="loginCenter">
+      <div class="loginPopup">
+        <div class="close-btn" id="loginCloseButton">&times;</div>
+        <form id="login-form" method="POST" novalidate>
+          <h2>Login</h2>
+
+          <div class="form-element">
+            <label for="usernameLogin">Username</label>
+            <input type="text" id="usernameLogin" placeholder="Enter a username" maxlength="69" required>
+            <div class="error-message" id="usernameLogin-error"></div>
+          </div>
+
+          <div class="form-element">
+            <label for="passwordLogin">Password</label>
+            <input type="password" id="passwordLogin" placeholder="Enter a password" maxlength="255" required>
+            <div id="loginSuccessMessage" style="color: green; margin-top: 10px; display: none;"></div>
+            <div class="error-message" id="passwordLogin-error"></div>
+          </div>
+
+          <div class="form-element">
+            <button type="submit">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
+
+
     <div class="center" id="registerCenter">
       <div class="registerPopup">
         <div class="close-btn" id="registerCloseButton">&times;</div>

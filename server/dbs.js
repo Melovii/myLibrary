@@ -36,7 +36,7 @@ connection.connect((err) => {
                 CREATE TABLE IF NOT EXISTS Users
                 (
                     user_id     INT AUTO_INCREMENT,
-                    name        VARCHAR(69) UNIQUE NOT NULL,
+                    username        VARCHAR(69) UNIQUE NOT NULL,
                     pass_hash   VARCHAR(255) NOT NULL,
                     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     PRIMARY KEY (user_id)

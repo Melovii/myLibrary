@@ -71,6 +71,8 @@ class Library {
         } else {
             console.error('Error adding book');
         }
+
+        location.reload();
     }
 
     // Remove a book from the database

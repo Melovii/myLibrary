@@ -163,7 +163,7 @@ main {
 
 /* ADD BOOK POPUP */
 
-.center, #registerCenter{
+.center, #registerCenter, #loginCenter{
     position: absolute;
     top: 50%;
     left: 50%;
@@ -174,11 +174,11 @@ main {
     height: 100%;
 }
 
-.center.active, #registerCenter.active {
+.center.active, #registerCenter.active, #loginCenter.active {
     transform: translate(-50%, -50%);
 }
 
-.center button, #registerCenter button {
+.center button, #registerCenter button, #loginCenter button {
     padding: 10px 20px;
     font-weight: 600;
     font-size: 16px;
@@ -190,7 +190,7 @@ main {
     border-radius: 5px;
 }
 
-.addBookPopup, .registerPopup {
+.addBookPopup, .registerPopup, .loginPopup {
     text-align: start;
     background: white;
     color: var(--bg-color);
@@ -208,11 +208,7 @@ main {
                 transform 200ms ease-in-out 0ms;
 }
 
-div.registerPopup {
-
-}
-
-.addBookPopup.active, .registerPopup.active {
+.addBookPopup.active, .registerPopup.active, .loginPopup.active {
     top: 50%;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
