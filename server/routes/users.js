@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const connection = require('../dbs');
 
 // Login a user //TODO: (CHECK IF THIS SHIT IS GOOD DAWG)
