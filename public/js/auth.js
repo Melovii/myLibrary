@@ -122,6 +122,13 @@ function toggleLoginPopup(show) {
   }
 }
 
+function clearLoginMessages() {
+  usernameLoginError.textContent = '';
+  passwordLoginError.textContent = '';
+  loginSuccessMessage.style.display = 'none';
+  loginSuccessMessage.textContent = '';
+}
+
 function openLoginPopup() {
   toggleLoginPopup(true);
 }
@@ -129,6 +136,7 @@ function openLoginPopup() {
 function closeLoginPopup() {
   toggleLoginPopup(false);
   loginForm.reset();
+  clearLoginMessages();
 }
 
 // Open login popup form
@@ -140,6 +148,7 @@ loginCloseButton.addEventListener('click', closeLoginPopup);
 // Handle login register form submission
 loginForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  clearLoginMessages();
   let hasError = false;
 
   const username = usernameLoginInput.value.trim();
