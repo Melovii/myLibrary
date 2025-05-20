@@ -1,23 +1,27 @@
 const express = require('express');
-const dotenv = require('dotenv');
-const path = require('path');
-dotenv.config();
+const router = express.Router();
+const connection = require('../dbs');
 
-// Import the database connection
-const connection = require('./dbs');
+// router.get('/books/:userId', (req, res) => {
+//   const userId = req.params.userId;
+//
+//   const query = 'SELECT * FROM Books WHERE user_id = ?';
+//
+//   connection.query(query, [userId], (err, results) => {
+//     if (err) {
+//       return res.status(500).json({ error: 'Error fetching books' });
+//     }
+//     res.status(200).json(results);
+//   });
+// });
 
-const app = express();
-app.use(express.json());
-
-// Serve static files directly from the root directory
-app.use(express.static(path.join(__dirname)));
 
 // Route to get all books
-app.get('/books', (req, res) => {
+router.get('/books', (req, res) => {
   const query = `
-  	SELECT Books.*, Authors.name as author
-	FROM Books
-	JOIN Authors on Books.author_id = Authors.author_id
+    SELECT Books.*, Authors.name as author
+    FROM Books
+    JOIN Authors on Books.author_id = Authors.author_id
   `;
   connection.query(query, (err, results) => {
     if (err) {
@@ -28,7 +32,7 @@ app.get('/books', (req, res) => {
 });
 
 // Route to add a book
-app.post('/addBook', (req, res) => {
+router.post('/addBook', (req, res) => {
   const { title, author, pages, isRead } = req.body;
 
   const authorQuery = 'SELECT author_id FROM Authors WHERE name = ?';
@@ -67,19 +71,20 @@ app.post('/addBook', (req, res) => {
 });
 
 // Route to remove a book
-app.delete('/removeBook', (req, res) => {
-	const { bookID } = req.body;
-	const query = 'DELETE FROM Books WHERE book_id = ?';
-  
-	connection.query(query, [bookID], (err, results) => {
-	  if (err) {
-		return res.status(500).json({ error: 'Error removing book' });
-	  }
-	  res.status(200).json({ message: 'Book removed successfully' });
-	});
+router.delete('/removeBook', (req, res) => {
+  const { bookID } = req.body;
+  const query = 'DELETE FROM Books WHERE book_id = ?';
+
+  connection.query(query, [bookID], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error removing book' });
+    }
+    res.status(200).json({ message: 'Book removed successfully' });
+  });
 });
 
-app.put('/updateReadStatus', (req, res) => {
+// Route to update read status
+router.put('/updateReadStatus', (req, res) => {
   const { bookID, isRead } = req.body;
   const query = 'UPDATE Books SET is_read = ? WHERE book_id = ?';
   connection.query(query, [isRead, bookID], (err) => {
@@ -90,12 +95,4 @@ app.put('/updateReadStatus', (req, res) => {
   });
 });
 
-// Route to serve index.html from the root directory
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = router;
