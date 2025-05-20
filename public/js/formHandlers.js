@@ -7,6 +7,19 @@ export function setupFormHandlers(library) {
     const titleInput = document.getElementById('title');
     const authorInput = document.getElementById('author');
     const pagesInput = document.getElementById('pages');
+    const categorySelect = document.getElementById('category');
+    const categoryError = document.getElementById('category-error');
+    const isRead = document.getElementById('read-check');
+
+    function resetForm() {
+        form.reset();
+        categorySelect.selectedIndex = 0;
+        categoryError.textContent = '';
+        titleInput.classList.remove('error');
+        authorInput.classList.remove('error');
+        pagesInput.classList.remove('error');
+        categorySelect.classList.remove('error');
+    }
 
     popupButton.addEventListener('click', () => {
         document.querySelector('.popup').classList.add('active');
@@ -18,25 +31,45 @@ export function setupFormHandlers(library) {
         document.querySelector('.popup').classList.remove('active');
         document.querySelector('.center').classList.remove('active');
         document.body.classList.remove('no-scroll');
+        resetForm(); // 🔁 Reset form on close
     });
 
     submitBook.addEventListener('click', (event) => {
         event.preventDefault();
-        if (!form.checkValidity()) {
-            event.stopPropagation();
-            form.reportValidity();
-        } else {
-            const title = titleInput.value;
-            const author = authorInput.value;
-            const pages = pagesInput.value;
-            const isRead = document.getElementById('read-check');
-          
-			// TODO: CHANGE IT LATER :SOB:
-			const userId = 1; // Assuming userId is 1 for now, you can change this as needed
-            library.addBook(title, author, pages, isRead, userId);
-            document.querySelector('.popup').classList.remove('active');
-            document.querySelector('.center').classList.remove('active');
-            document.body.classList.remove('no-scroll');
+
+        // Reset previous errors
+        categoryError.textContent = '';
+        categorySelect.classList.remove('error');
+
+        let valid = form.checkValidity();
+
+        // Additional check for category
+        if (!categorySelect.value) {
+            valid = false;
+            categoryError.textContent = 'Please select a category.';
+            categorySelect.classList.add('error');
         }
+
+        if (!valid) {
+            form.reportValidity();
+            return;
+        }
+
+        const title = titleInput.value;
+        const author = authorInput.value;
+        const pages = pagesInput.value;
+        const category = categorySelect.value;
+
+        // TODO: CHANGE IT LATER :SOB:
+        const userId = 1;
+
+        // Pass category to library method too (update your `addBook()` if needed)
+        library.addBook(title, author, pages, isRead.checked, category, userId);
+
+        // Close popup and reset form
+        document.querySelector('.popup').classList.remove('active');
+        document.querySelector('.center').classList.remove('active');
+        document.body.classList.remove('no-scroll');
+        resetForm();
     });
 }

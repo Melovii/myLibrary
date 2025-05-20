@@ -6,10 +6,21 @@ const connection = require('../dbs');
 
 // Route to get all books
 router.get('/books', (req, res) => {
-  // Only return books for user_id = 1 for now // TODO: CHANGE LATER :SOB:
   const query = `
-    SELECT * FROM Books WHERE user_id = 1
+    SELECT 
+      b.book_id,
+      b.title,
+      b.author,
+      b.pages,
+      b.is_read,
+      b.user_id,
+      c.name AS category_name
+    FROM Books b
+    LEFT JOIN BookCategories bc ON b.book_id = bc.book_id
+    LEFT JOIN Categories c ON bc.category_id = c.category_id
+    WHERE b.user_id = 1
   `;
+
   connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Error fetching books' });
@@ -18,9 +29,10 @@ router.get('/books', (req, res) => {
   });
 });
 
+
 // Route to add a book
 router.post('/addBook', (req, res) => {
-  const { title, author, pages, isRead, userId } = req.body;
+  const { title, author, pages, isRead, userId, categoryName } = req.body;
 
   const query = `
     INSERT INTO Books (title, author, pages, is_read, user_id)
@@ -29,9 +41,46 @@ router.post('/addBook', (req, res) => {
 
   connection.query(query, [title, author, pages, isRead, userId], (err, result) => {
     if (err) {
+      console.error('Error while inserting book:', err); // <-- THIS IS IMPORTANT
       return res.status(500).json({ error: 'Error adding book' });
     }
-    res.status(201).json({ message: 'Book added successfully', bookId: result.insertId });
+
+    const bookId = result.insertId;
+
+    if (categoryName) {
+      const getCategoryIdQuery = `
+        SELECT category_id FROM Categories WHERE name = ?
+      `;
+
+      connection.query(getCategoryIdQuery, [categoryName], (err, results) => {
+        if (err) {
+          console.error('Error fetching category ID:', err);
+          return res.status(500).json({ error: 'Error fetching category ID' });
+        }
+
+        if (results.length === 0) {
+          return res.status(400).json({ error: 'Invalid category name' });
+        }
+
+        const categoryId = results[0].category_id;
+
+        const insertCategoryLinkQuery = `
+          INSERT INTO BookCategories (book_id, category_id)
+          VALUES (?, ?)
+        `;
+
+        connection.query(insertCategoryLinkQuery, [bookId, categoryId], (err) => {
+          if (err) {
+            console.error('Error linking book to category:', err);
+            return res.status(500).json({ error: 'Book added, but failed to link category' });
+          }
+
+          res.status(201).json({ message: 'Book added with category', bookId });
+        });
+      });
+    } else {
+      res.status(201).json({ message: 'Book added without category', bookId });
+    }
   });
 });
 

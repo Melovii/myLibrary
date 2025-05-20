@@ -57,6 +57,24 @@ connection.connect((err) => {
 				);
 			`;
 
+			const createCategoriesTableQuery = `
+				CREATE TABLE IF NOT EXISTS Categories (
+					category_id INT AUTO_INCREMENT,
+					name        VARCHAR(50) UNIQUE,
+					PRIMARY KEY (category_id)
+				);
+			`;
+
+			const createBookCategoriesTableQuery = `
+				CREATE TABLE IF NOT EXISTS BookCategories (
+					book_id     INT,
+					category_id INT,
+					PRIMARY KEY (book_id, category_id),
+					FOREIGN KEY (book_id) REFERENCES Books(book_id) ON DELETE CASCADE,
+					FOREIGN KEY (category_id) REFERENCES Categories(category_id) ON DELETE CASCADE
+				);
+			`;
+
 			connection.query(createUsersTableQuery, (err) => {
 				if (err) {
 					console.error('Error creating Users table:', err);
@@ -70,6 +88,44 @@ connection.connect((err) => {
 					} else {
 						console.log('Books table created successfully.');
 					}
+
+					connection.query(createCategoriesTableQuery, (err) => {
+						if (err) {
+							console.error('Error creating Categories table:', err);
+						} else {
+							console.log('Categories table created successfully.');
+
+							// Insert fixed categories if they don't already exist
+							const predefinedCategories = [
+								'Biography', 'Educational', 'Fantasy',
+								'Fiction', 'Horror', 'Mystery',
+								'Religious', 'Romance', 'Sci-Fi', 'Self-Improvement', 'Other'
+							];
+
+							const insertCategoriesQuery = `
+								INSERT IGNORE INTO Categories (name)
+								VALUES ?;
+							`;
+
+							const categoryValues = predefinedCategories.map(name => [name]);
+
+							connection.query(insertCategoriesQuery, [categoryValues], (err) => {
+								if (err) {
+									console.error('Error inserting categories:', err);
+								} else {
+									console.log('Predefined categories inserted successfully.');
+								}
+							});
+						}
+
+						connection.query(createBookCategoriesTableQuery, (err) => {
+							if (err) {
+								console.error('Error creating BookCategories table:', err);
+							} else {
+								console.log('BookCategories table created successfully.');
+							}
+						});
+					});
 				});
 			});
 		});

@@ -16,7 +16,8 @@ export class Library {
                 bookOBJ.author,
                 bookOBJ.pages,
                 bookOBJ.is_read,
-                bookOBJ.book_id
+                bookOBJ.book_id,
+                bookOBJ.category_name
             );
             this.books.push(newBook);
             this.addCard(newBook.title, newBook.author, newBook.pages, { checked: newBook.isRead }, newBook);
@@ -36,7 +37,7 @@ export class Library {
     }
 
     // Add a new book to the database
-    async addBook(title, author, pages, isRead, userId) {
+    async addBook(title, author, pages, isRead, categoryName, userId) {
         const newBook = new Book(title.trim(), author.trim(), pages.trim(), isRead.checked);
 
 		// TODO: CHANGE USER_ID LATER :SOB:
@@ -48,8 +49,8 @@ export class Library {
                 author: newBook.author,
                 pages: newBook.pages,
                 isRead: newBook.isRead,
-				userId: userId // Pass userId to the server (Replace with actual user ID later on)
-
+				userId: userId, // Pass userId to the server (Replace with actual user ID later on)
+                categoryName: categoryName // send the name instead of number
             })
         });
 
@@ -149,6 +150,27 @@ export class Library {
         authorPara.classList.add('author');
         authorPara.textContent = author;
 
+        const categoryPara = document.createElement('p');
+        categoryPara.classList.add('category');
+
+        // Emoji mapping
+        const emojiMap = {
+            "Biography": "🧑‍🏫",
+            "Educational": "📘",
+            "Fantasy": "🧙",
+            "Fiction": "📖",
+            "Horror": "👻",
+            "Mystery": "🕵️",
+            "Religious": "🙏",
+            "Romance": "💖",
+            "Sci-Fi": "🚀",
+            "Self-Improvement": "💡",
+            "Other": "📚"
+        };
+
+        const emoji = emojiMap[newBook.category] || "📚";
+        categoryPara.textContent = `${emoji} ${newBook.category}`;
+
         const pagesPara = document.createElement('p');
         pagesPara.classList.add('pages');
         pagesPara.textContent = `${pages} pages`;
@@ -170,7 +192,7 @@ export class Library {
         });
 
         this.emptyInput();
-        cardDIV.append(titlePara, authorPara, pagesPara, isReadButton, removeButton);
+        cardDIV.append(titlePara, authorPara, categoryPara, pagesPara, isReadButton, removeButton);
         main.appendChild(cardDIV);
     }
 
