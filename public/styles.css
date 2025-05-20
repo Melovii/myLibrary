@@ -1,10 +1,12 @@
 html {
     position: relative;
     min-height: 100%;
+    overflow-x: hidden;
 }
 
 body {
     background-color: var(--bg-color);
+    overflow-x: hidden;
 }
 
 :root {
@@ -163,15 +165,16 @@ main {
 
 /* ADD BOOK POPUP */
 
-.center, #registerCenter, #loginCenter{
-    position: absolute;
+.center, #registerCenter, #loginCenter {
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-150%, -150%);
     /* ARGGHHH */
     background-color: rgba(43, 46, 47, 0.25);
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
 }
 
 .center.active, #registerCenter.active, #loginCenter.active {
@@ -190,7 +193,11 @@ main {
     border-radius: 5px;
 }
 
-.addBookPopup, .registerPopup, .loginPopup {
+#add-book {
+	font-size: 24px;
+}
+
+.addBookPopup, .registerPopup, .loginPopup, .popup {
     text-align: start;
     background: white;
     color: var(--bg-color);
@@ -206,9 +213,10 @@ main {
     transition: top 0ms ease-in-out 200ms,
                 opacity 200ms ease-in-out 0ms,
                 transform 200ms ease-in-out 0ms;
+    z-index: 1001;
 }
 
-.addBookPopup.active, .registerPopup.active, .loginPopup.active {
+.addBookPopup.active, .registerPopup.active, .loginPopup.active, .popup.active {
     top: 50%;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
