@@ -5,7 +5,6 @@ const connection = MySQL.createConnection({
 	host: process.env.DB_HOST || 'localhost',
 	user: process.env.DB_USER || 'root',
 	password: process.env.DB_PASSWORD || '',
-	database: process.env.DB_NAME || 'myLibrary'
 });
 
 connection.connect((err) => {
@@ -16,6 +15,7 @@ connection.connect((err) => {
 	console.log('Connected to MySQL as id ' + connection.threadId);
 
 	// TODO: Create categories table later
+	// Create a database if it doesn't exist
 	const createDatabaseQuery = `CREATE DATABASE IF NOT EXISTS ${process.env.DB_NAME || 'myLibrary'}`;
 	connection.query(createDatabaseQuery, (err, results) => {
 		if (err) {
