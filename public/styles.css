@@ -1,10 +1,12 @@
 html {
     position: relative;
     min-height: 100%;
+    overflow-x: hidden;
 }
 
 body {
     background-color: var(--bg-color);
+    overflow-x: hidden;
 }
 
 :root {
@@ -190,7 +192,7 @@ main {
     border-radius: 5px;
 }
 
-.addBookPopup, .registerPopup, .loginPopup {
+.addBookPopup, .registerPopup, .loginPopup, .popup {
     text-align: start;
     background: white;
     color: var(--bg-color);
@@ -208,7 +210,7 @@ main {
                 transform 200ms ease-in-out 0ms;
 }
 
-.addBookPopup.active, .registerPopup.active, .loginPopup.active {
+.addBookPopup.active, .registerPopup.active, .loginPopup.active, .popup.active {
     top: 50%;
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);

@@ -209,9 +209,15 @@ const pagesInput = document.getElementById('pages');
 
 // Open popup form
 popupButton.addEventListener('click', () => {
+    // Use the correct selector for the add book popup
     document.querySelector('.popup').classList.add('active');
     document.querySelector('.center').classList.add('active');
     document.body.classList.add('no-scroll');
+    // Hide register and login popups if present
+    const registerPopup = document.querySelector('.registerPopup');
+    const loginPopup = document.querySelector('.loginPopup');
+    if (registerPopup) registerPopup.classList.remove('active');
+    if (loginPopup) loginPopup.classList.remove('active');
 });
 
 // Close popup form
