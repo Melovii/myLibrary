@@ -34,6 +34,7 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ error: 'Invalid username or password' });
       }
 
+      req.session.userId = results[0].user_id; // 🆕 Store userId in session
       res.status(200).json({
         message: 'Login successful',
         // userId: results[0].user_id,
@@ -44,6 +45,18 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 })
+
+// Logout route
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid'); // Optional: clear cookie manually
+    res.redirect('/'); // Redirect to homepage after logout
+  });
+});
+
 
 // Register a new user
 router.post('/register', async (req, res) => {

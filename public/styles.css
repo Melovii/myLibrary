@@ -74,7 +74,7 @@ header > div > button {
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 24px;
     border-width: 0;
     cursor: pointer;
     background-color: #eaeaea;
@@ -193,6 +193,11 @@ main {
     border-radius: 5px;
 }
 
+#registerCenter button:hover, #loginCenter button:hover {
+    background-color: var(--bg-color) !important;
+    color: white !important;
+}
+
 #add-book {
 	font-size: 24px;
 }
@@ -282,8 +287,8 @@ form .form-element {
 }
 
 .form-element > button:hover {
-    background-color: var(--bg-color);
-    color: white;
+    background-color: var(--bg-color); !important;
+    color: white !important;
 }
 
 .error-message {
@@ -351,7 +356,30 @@ footer a {
 }
 
 .auth-buttons button:hover {
-    background-color: var(--bg-color);
+    background-color: rgba(40, 42, 42, 0.69);
     color: white;
     transform: scale(1.05);
+}
+
+.form-element > select {
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+    border: 1px solid grey;
+    padding: 10px;
+    outline: none;
+    border-radius: 5px;
+    background-color: white;
+    color: var(--bg-color);
+    font-size: 14px;
+    font-family: inherit;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="%23191B1C" d="M0 0l5 6 5-6z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+}
+
+.form-element > select:invalid {
+    color: gray;
 }

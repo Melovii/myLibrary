@@ -13,11 +13,12 @@
 
 <div id="container">
     <header>
-        <div class="left-side" style="display: flex; align-items: center;">
-            <img class="logo" src="media/icons/logo.svg" alt="logo">
-            <p style="font-size: 42px; font-weight: 600;">myLibrary</p>
+        <div class="home-header-center left-side" style="display: flex; align-items: center; gap: 8px; margin-left: 65px;">
+            <img class="logo" src="/media/icons/logo.svg" alt="logo">
+            <h1 style="font-size: 42px;">myLibrary</h1>
         </div>
         <div class="right-side">
+            <button id="logout">Logout</button>
             <button id="add-book">+ Add Book</button>
         </div>
     </header>
@@ -43,6 +44,24 @@
                         <div class="error-message" id="pages-error"></div>
                     </div>
                     <div class="form-element">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Educational">Educational</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Horror">Horror</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Religious">Religious</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Sci-Fi">Sci-Fi</option>
+                            <option value="Self-Improvement">Self-Improvement</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="error-message" id="category-error"></div>
+                    </div>
+                    <div class="form-element">
                         <input type="checkbox" id="read-check">
                         <label for="read-check">Finished reading</label>
                         <button type="submit" class="form-element">Add Book</button>
@@ -50,15 +69,29 @@
                 </form>
             </div>
         </div>
+        <div id="empty-library-message" style="display: none; text-align: center; margin-top: 10px; font-size: 26px;">
+            <img src="/media/icons/cat.png" alt="No books yet" style="width: 475px; filter: grayscale(1)">
+            <p>Add your first book to get started!</p>
+        </div>
     </main>
     <footer>
-        <p>Copyright © 2025 melovii</p>
-        <a href="https://github.com/melovii" target="blank">
+        <p>Copyright © 2025 melovii & veryvroosh</p>
+        <a href="https://github.com/Melovii/myLibrary" target="blank">
             <img class="github" src="media/icons/github.png" aria-hidden="true" alt="github logo"></img>
         </a>
     </footer>
 </div>
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutBtn = document.getElementById('logout');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                window.location.href = '/logout';
+            });
+        }
+    });
+</script>
 <script type="module" src="./js/main.js"></script>
 </html>
